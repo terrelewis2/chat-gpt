@@ -16,12 +16,7 @@
 
 package android.template.ui.mymodel
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import android.template.R
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -39,7 +34,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.repeatOnLifecycle
 import android.template.ui.theme.MyApplicationTheme
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 
 @Composable
 fun MyModelScreen(modifier: Modifier = Modifier, viewModel: MyModelViewModel = hiltViewModel()) {
@@ -72,7 +72,9 @@ internal fun MyModelScreen(
     Column(modifier) {
         var nameMyModel by remember { mutableStateOf("Compose") }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextField(
@@ -85,7 +87,18 @@ internal fun MyModelScreen(
             }
         }
         items.forEach {
-            Text("Saved item: $it")
+            Row {
+                Image(painter = painterResource(id = R.drawable.dp),
+                    contentDescription = "",
+                    modifier = Modifier
+                        // Set image size to 40 dp
+                        .size(40.dp)
+                        // Clip image to be shaped as a circle
+                        .clip(CircleShape))
+                // Add a horizontal space between the image and the column
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Saved item: $it")
+            }
         }
     }
 }
